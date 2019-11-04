@@ -325,15 +325,39 @@ drwxr-xr-x 12 root root    4096 6月  28 09:11 org
 
 > **注意：下述命令均在docker容器中执行。**
 
+
+### 启动bert服务
+
 ```bash
-#!# 注意：下述命令均在docker容器中执行
-# 切换目录
-[root@8b39a2d1169f pages] > cd ~
+# 进入bert启动目录
+[root@8b39a2d1169f pages] > cd /opt/bert/chinese_L-12_H-768_A-12
+[root@8b39a2d1169f pages] > nohup bert-serving-start -num_worker 8 -model_dir /opt/bert/chinese_L-12_H-768_A-12 &
+# 启动bert服务
+# 参数说明
+# --num_worker 启动bert的work数量
+# -model_dir 指定bert模型路径
+
+# 检查bert服务是否启动
+[root@8b39a2d1169f pages] > ps -ef |grep bert
+root     15240     1  0 10月30 ?      00:00:14 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17043 15240  0 10月30 ?      00:00:10 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17048 15240  3 10月30 ?      04:09:40 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17051 15240  3 10月30 ?      04:07:48 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17054 15240  3 10月30 ?      04:14:32 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17057 15240  3 10月30 ?      04:21:57 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17060 15240  3 10月30 ?      04:25:09 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17063 15240  3 10月30 ?      04:14:40 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17067 15240  3 10月30 ?      04:10:34 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     17072 15240  3 10月30 ?      04:07:08 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
+root     29796 29672  0 08:34 pts/58   00:00:00 grep --color=auto bert
 ```
 
 ### 使用 Supervisor 启动服务
 
 ```bash
+#!# 注意：下述命令均在docker容器中执行
+# 切换目录
+[root@8b39a2d1169f pages] > cd ~
 # 检查 supervisor 服务是否启动
 [root@8b39a2d1169f ~] > ps aux | grep supervisor
 root      1459  0.0  0.0  12364   980 pts/0    S+   07:55   0:00 grep --color=auto supervisor
