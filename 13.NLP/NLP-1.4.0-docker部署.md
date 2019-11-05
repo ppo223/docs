@@ -329,16 +329,18 @@ drwxr-xr-x 12 root root    4096 6月  28 09:11 org
 ### 启动bert服务
 
 ```bash
+# 启动 python 虚拟化环境
+[root@8b39a2d1169f ~] > source ~/.venvs/cwtap/bin/activate
 # 进入bert启动目录
-[root@8b39a2d1169f pages] > cd /opt/bert/chinese_L-12_H-768_A-12
-[root@8b39a2d1169f pages] > nohup bert-serving-start -num_worker 8 -model_dir /opt/bert/chinese_L-12_H-768_A-12 &
+(cwtap)[root@8b39a2d1169f ~] > cd /opt/bert/chinese_L-12_H-768_A-12
+(cwtap)[root@8b39a2d1169f chinese_L-12_H-768_A-12] > nohup bert-serving-start -num_worker 8 -model_dir /opt/bert/chinese_L-12_H-768_A-12 &
 # 启动bert服务
 # 参数说明
 # --num_worker 启动bert的work数量
 # -model_dir 指定bert模型路径
 
 # 检查bert服务是否启动
-[root@8b39a2d1169f pages] > ps -ef |grep bert
+(cwtap)[root@8b39a2d1169f chinese_L-12_H-768_A-12] > ps -ef |grep bert
 root     15240     1  0 10月30 ?      00:00:14 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
 root     17043 15240  0 10月30 ?      00:00:10 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
 root     17048 15240  3 10月30 ?      04:09:40 /root/.venvs/cwtap/bin/python3.6 /root/.venvs/cwtap/bin/bert-serving-start -model_dir /opt/bert/chinese_L-12_H-768_A-12 -num_worker 8
@@ -357,21 +359,21 @@ root     29796 29672  0 08:34 pts/58   00:00:00 grep --color=auto bert
 ```bash
 #!# 注意：下述命令均在docker容器中执行
 # 切换目录
-[root@8b39a2d1169f pages] > cd ~
+(cwtap)[root@8b39a2d1169f chinese_L-12_H-768_A-12] > cd ~
 # 检查 supervisor 服务是否启动
-[root@8b39a2d1169f ~] > ps aux | grep supervisor
+(cwtap)[root@8b39a2d1169f ~] > ps aux | grep supervisor
 root      1459  0.0  0.0  12364   980 pts/0    S+   07:55   0:00 grep --color=auto supervisor
 
 # 启动 supervisor 
-[root@8b39a2d1169f ~] > supervisord -c /etc/supervisord.conf
+(cwtap)[root@8b39a2d1169f ~] > supervisord -c /etc/supervisord.conf
 
 # 检查
-[root@8b39a2d1169f ~] > ps aux | grep supervisor
+(cwtap)[root@8b39a2d1169f ~] > ps aux | grep supervisor
 root      1485  0.2  0.0 142512 14396 ?        Ss   07:57   0:00 /usr/bin/python /usr/bin/supervisord -c /etcsupervisord.conf
 root      1850  0.0  0.0  12364   976 pts/0    S+   07:57   0:00 grep --color=auto supervisor
 
 # 检查服务是否启动
-[root@8b39a2d1169f ~] > echo "exit" | supervisorctl 
+(cwtap)[root@8b39a2d1169f ~] > echo "exit" | supervisorctl 
 cwtap                            RUNNING   pid 1488, uptime 0:01:02
 mysql                            RUNNING   pid 1589, uptime 0:01:01
 neo4j                            RUNNING   pid 1486, uptime 0:01:02
@@ -386,7 +388,7 @@ supervisor>
 # supervisorctl restart neo4j # 重启 neo4j 服务
 # supervisorctl restart redis # 重启 redis 服务
 # supervisorctl restart tomcat # 重启 tomcat 服务
-[root@8b39a2d1169f ~] > supervisorctl restart cwtap
+(cwtap)[root@8b39a2d1169f ~] > supervisorctl restart cwtap
 cwtap: stopped
 cwtap: started
 ```
